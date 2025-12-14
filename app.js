@@ -11,6 +11,11 @@ const User = require("./models/User");
 const userRoutes = require("./routes/User");
 const planRoutes = require("./routes/plan");
 const methodOverride = require("method-override");
+const subscriptionRoutes = require("./routes/subscription");
+const reviewRoutes = require("./routes/review");
+const followRoutes = require("./routes/follow");
+const trainerRoutes = require("./routes/trainer");
+
 
 
 
@@ -55,6 +60,10 @@ app.use((req, res, next) => {
 
 app.use("/plans", planRoutes);
 app.use("/", userRoutes);
+app.use("/", subscriptionRoutes);
+app.use("/plans/:id/reviews", reviewRoutes);
+app.use("/", followRoutes);
+app.use('/trainers', trainerRoutes);
 
 
 

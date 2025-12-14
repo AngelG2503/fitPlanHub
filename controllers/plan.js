@@ -1,5 +1,6 @@
 const Plan = require('../models/Plans')
-const Review = require('../models/review')
+const Review = require('../models/review');
+const User = require('../models/User');
 
 module.exports.index = async (req, res) => {
     const { category } = req.query;
@@ -43,6 +44,11 @@ module.exports.show = async (req, res) => {
     if (!plan) {
         req.flash('error', 'Plan not found');
         return res.redirect('/plans');
+    }
+    let user = null;
+    if (req.user) {
+        user = await User.findById(req.user._id).populate('subscriptions.plan');
+
     }
     res.render('plans/show', { plan });
 };

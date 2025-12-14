@@ -75,6 +75,7 @@ body {
     background-color: #fe424d !important;
     border: none !important;
     border-radius: 1.5rem !important;
+    color: white !important;
 }
 
 .delete-btn {
@@ -231,4 +232,23 @@ body {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 
+}
+
+.trainer-card {
+    width: 100%;
+    max-width: 320px;
+    height: 380px;
+    margin: auto;
+    border-radius: 1rem;
+    border: none !important;
+}
+
+.trainer-name-card {
+    padding: 2rem;
+    border-radius: 2.5rem;
+    ;
+}
+
+.trainer-link {
+    color: #fe424d;
 }

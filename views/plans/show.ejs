@@ -1,100 +1,123 @@
 <% layout ('/layouts/boilerplate')%>
+    <% const isSubscribed=currentUser && currentUser.subscriptions && currentUser.subscriptions.some(sub=>
+        sub.plan.equals(plan._id));
+        const isOwner = currentUser && plan.trainer._id.equals(currentUser._id); const hasAccess = isSubscribed
+        ||isOwner%>
 
-    <div class="row mt-3">
-        <div class="col-8 offset-3">
-            <h3>
-                <%=plan.title%>
-            </h3>
-        </div>
-        <div class="card col-6 offset-3 show-card plan-card ">
-            <img src="<%= plan.image %>" class="card-img-top show-img" alt="plan_image">
-            <div class="card-body mt-3" style="margin-left: 1rem;">
-                <p class="card-text">
-                    Created by <i>
-                        <%= plan.trainer.name %>
-                    </i></p>
-                <p class="card-text">
-                    <%=plan.description%> <br>
-                        <span class="badge category-badge">
-                            <%=plan.category%>
-                        </span>
-                        <span class="badge difficulty-badge">
-                            <%=plan.difficulty%>
-                        </span>
-                        <br />
-                        <%= plan.duration %> weeks <br>
-                            <b>&#8377; <%=plan.price.toLocaleString('en-IN')%></b>
-                </p>
-                <br />
+        <div class="row mt-3">
+            <div class="col-8 offset-3">
+                <h3>
+                    <%=plan.title%>
+                </h3>
             </div>
-        </div>
-        <% if(currentUser&& plan.trainer._id.equals(currentUser._id)) {%>
-            <div class="btns">
-                <a href="/plans/<%=plan._id%>/edit" class="btn btn-dark col-2 col-md-1 offset-3 edit-btn ">Edit</a>
-                <form method="post" action="/plans/<%=plan._id%>?_method=delete">
-                    <button class="btn btn-dark offset-5 delete-btn ">Delete</button>
-                </form>
+            <div class="card col-6 offset-3 show-card plan-card ">
+                <img src="<%= plan.image %>" class="card-img-top show-img" alt="plan_image">
+                <div class="card-body mt-3" style="margin-left: 1rem;">
+                    <p class="card-text">
+                        Created by <a href="/trainers/<%= plan.trainer._id %>" class="trainer-link"><i>
+                                <%= plan.trainer.name %>
+                            </i></a></p>
+                    <p class="card-text"> <b>&#8377; <%=plan.price.toLocaleString('en-IN')%></b></p>
+                    <%if(!hasAccess){%>
+                        <p class="text-muted">You need to subscribe to this plan to view the details</p>
+                        <%}else{%>
+
+                            <p class="card-text">
+                                <%=plan.description%> <br>
+                                    <span class="badge category-badge">
+                                        <%=plan.category%>
+                                    </span>
+                                    <span class="badge difficulty-badge">
+                                        <%=plan.difficulty%>
+                                    </span>
+                                    <br />
+                                    <%= plan.duration %> weeks <br>
+
+                            </p>
+                            <%}%>
+                                <br />
+                </div>
             </div>
-            <% } %>
+            <% if(currentUser&&isOwner) {%>
+                <div class="btns">
+                    <a href="/plans/<%=plan._id%>/edit" class="btn btn-dark col-2 col-md-1 offset-3 edit-btn ">Edit</a>
+                    <form method="post" action="/plans/<%=plan._id%>?_method=delete">
+                        <button class="btn btn-dark offset-5 delete-btn ">Delete</button>
+                    </form>
+                </div>
+                <% } %>
+                    <div class="col-6 offset-3">
+                        <%if(currentUser && !isOwner &&!isSubscribed){%>
+                            <form method="POST" action="/plans/<%= plan._id %>/subscribe" class="d-inline">
+                                <button class="btn btn-success">Subscribe - ₹<%= plan.price %></button>
+                            </form>
+                            <% } else if(isSubscribed) { %>
+                                <span class="btn edit-btn">Subscribed</span>
+                                <% } %>
+
+                    </div>
 
 
-                <div class="col-8 offset-3 mb-3">
-                    <hr />
-                    <% if(currentUser) {%>
-                        <h4>Leave a Review</h4>
-                        <form action="/plans/<%=plan._id%>/reviews" method="post" novalidate class="needs-validation">
-                            <div class="mb-3 mt-3">
-                                <label for="rating" class="form-label">Rating</label>
-                                <fieldset class="starability-slot">
-                                    <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]"
-                                        value="1" checked aria-label="No rating." />
-                                    <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                                    <label for="first-rate1" title="Terrible">1 star</label>
-                                    <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                                    <label for="first-rate2" title="Not good">2 stars</label>
-                                    <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                                    <label for="first-rate3" title="Average">3 stars</label>
-                                    <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                                    <label for="first-rate4" title="Very good">4 stars</label>
-                                    <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                                    <label for="first-rate5" title="Amazing">5 stars</label>
-                                </fieldset>
-                                <div>
-                                    <div>
-                                        <label for="comment" class="form-label">Comment</label>
-                                        <textarea name="review[comment]" id="comment" cols="30" rows="5"
-                                            class="form-control" required></textarea>
-                                        <div class="invalid-feedback">Please Submit some comments</div>
-                                    </div>
-                                    <br>
-                                    <button class="btn btn-outline-dark">Submit</button>
-                        </form>
-                        <hr />
-                        <% } %>
-                            <% if (plan.reviews.length> 0) {%>
-                                <div class="row">
-                                    <p><b>All Reviews</b></p>
-                                    <% for (review of plan.reviews) { %>
-                                        <div class="card col-5 ms-3 mb-3">
-                                            <div class="card-body mb-3 mt-3">
-                                                <h5 class="card-title">@<%= review.author.username %>
-                                                </h5>
-                                                <p class="starability-result card-text"
-                                                    data-rating="<%= review.rating %>"></p>
-                                                <p class="card-text">
-                                                    <%= review.comment %>
-                                                </p>
+                    <%if(hasAccess){%>
+                        <div class="col-8 offset-3 mb-3">
+                            <hr />
+                            <% if(currentUser) {%>
+                                <h4>Leave a Review</h4>
+                                <form action="/plans/<%=plan._id%>/reviews" method="post" novalidate
+                                    class="needs-validation">
+                                    <div class="mb-3 mt-3">
+                                        <label for="rating" class="form-label">Rating</label>
+                                        <fieldset class="starability-slot">
+                                            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]"
+                                                value="1" checked aria-label="No rating." />
+                                            <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                            <label for="first-rate1" title="Terrible">1 star</label>
+                                            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                            <label for="first-rate2" title="Not good">2 stars</label>
+                                            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                            <label for="first-rate3" title="Average">3 stars</label>
+                                            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                            <label for="first-rate4" title="Very good">4 stars</label>
+                                            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                            <label for="first-rate5" title="Amazing">5 stars</label>
+                                        </fieldset>
+                                        <div>
+                                            <div>
+                                                <label for="comment" class="form-label">Comment</label>
+                                                <textarea name="review[comment]" id="comment" cols="30" rows="5"
+                                                    class="form-control" required></textarea>
+                                                <div class="invalid-feedback">Please Submit some comments</div>
                                             </div>
-                                            <% if(currentUser&& review.author._id.equals(currentUser._id)) {%>
-                                                <form class=" mb-3" method="post"
-                                                    action="/plans/<%=plan._id%>/reviews/<%=review._id%>?_method=DELETE">
-                                                    <button class=" btn btn-sm btn-dark">Delete</button>
-                                                </form>
+                                            <br>
+                                            <button class="btn btn-outline-dark">Submit</button>
+                                </form>
+                                <hr />
+                                <% } %>
+                                    <% if (plan.reviews.length> 0) {%>
+                                        <div class="row">
+                                            <p><b>All Reviews</b></p>
+                                            <% for (review of plan.reviews) { %>
+                                                <div class="card col-5 ms-3 mb-3">
+                                                    <div class="card-body mb-3 mt-3">
+                                                        <h5 class="card-title">@<%= review.author.username %>
+                                                        </h5>
+                                                        <p class="starability-result card-text"
+                                                            data-rating="<%= review.rating %>"></p>
+                                                        <p class="card-text">
+                                                            <%= review.comment %>
+                                                        </p>
+                                                    </div>
+                                                    <% if(currentUser&& review.author._id.equals(currentUser._id)) {%>
+                                                        <form class=" mb-3" method="post"
+                                                            action="/plans/<%=plan._id%>/reviews/<%=review._id%>?_method=DELETE">
+                                                            <button class=" btn btn-sm btn-dark">Delete</button>
+                                                        </form>
+                                                        <% } %>
+                                                </div>
                                                 <% } %>
                                         </div>
-                                        <% } %>
-                                </div>
-                                <%}%>
-                </div>
+                                        <%}%>
+                        </div>
+                        <%}%>
 
-    </div>
+        </div>
