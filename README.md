@@ -10,8 +10,6 @@ The project includes:
 - MongoDB with Mongoose for data persistence  
 - EJS-based frontend with Bootstrap for UI  
 
-***
-
 ## 2. Setup and Installation
 
 ### 2.1 Prerequisites
@@ -35,8 +33,6 @@ The project includes:
    - `node app.js`
 6. Open in browser:
    - `http://localhost:3000`
-
-***
 
 ## 3. Features Implemented
 
@@ -96,7 +92,6 @@ After login, users get a personalized feed:
 - Marks which plans the user has already subscribed to  
 - Includes basic trainer information in each feed item  
 
-***
 
 ## 4. Database Design
 
@@ -141,8 +136,6 @@ Relationships:
 - Many reviews to one plan  
 - Many reviews to one user  
 
-***
-
 ## 5. API Design and Endpoints
 
 ### 5.1 Authentication
@@ -183,8 +176,6 @@ Relationships:
 
 - `POST /plans/:id/reviews` – Add a review to a plan (subscribed user)  
 - `DELETE /plans/:id/reviews/:reviewId` – Delete own review  
-
-***
 
 ## 6. Frontend Screens
 
@@ -231,7 +222,6 @@ Relationships:
 - `GET /following`  
 - Displays all trainers the user is following with links to their profiles  
 
-***
 
 ## 7. Tech Stack
 
@@ -243,8 +233,6 @@ Relationships:
 - **Sessions & Flash:** express-session, connect-flash  
 - **Utilities:** method-override, dotenv  
 
-***
-
 ## 8. Project Structure (High-Level)
 
 - `app.js` – Main server entry point  
@@ -254,8 +242,6 @@ Relationships:
 - `views/` – EJS templates (plans, users, trainers, layouts, includes)  
 - `public/` – Static assets (CSS, images, JS)  
 - `middleware.js` – Custom middleware (auth guards, validation)  
-
-***
 
 ## 9. Deliverables Mapping
 
