@@ -1,6 +1,6 @@
-# FitPlanHub - Project Submission
+# FitPlanHub - Task Submission
 
-**Student Name:** [Your Name]
+**Student Name: Angel Gurjar
 **Student ID:** en22cs301123
 **GitHub Repository:** https://github.com/AngelG2503/fitPlanHub
 
