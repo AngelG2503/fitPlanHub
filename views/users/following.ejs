@@ -1,0 +1,26 @@
+<% layout('/layouts/boilerplate') %>
+    <div class="container mt-4">
+        <h2>Trainers You Follow</h2>
+
+        <% if(following.length===0) { %>
+            <p class="text-muted">You're not following any trainers yet.</p>
+            <a href="/trainers" class="btn btn-primary">Browse Trainers</a>
+            <% } else { %>
+                <div class="row">
+                    <% for(let trainer of following) { %>
+                        <div class="col-md-4 mb-3">
+                            <div class="card all-trainer-card">
+                                <div class="card-body">
+                                    <h5>
+                                        <%= trainer.name || trainer.username %>
+                                    </h5>
+                                    <p class="text-muted">@<%= trainer.name %>
+                                    </p>
+                                    <a href="/trainers/<%= trainer._id %>" class="btn btn-dark">View Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                </div>
+                <% } %>
+    </div>

@@ -56,4 +56,10 @@ module.exports.showFeed = async (req, res) => {
     const subscribedPlanIds = user.subscriptions.map(sub => sub.plan.toString());
 
     res.render('users/feed', { plans, user, subscribedPlanIds });
-}
+};
+
+
+module.exports.showFollowing = async (req, res) => {
+    const user = await User.findById(req.user._id).populate('following');
+    res.render('users/following', { following: user.following });
+};

@@ -9,9 +9,10 @@
                 <a class="nav-link" href="/plans">Explore Plans</a>
                 <% if(currentUser) { %>
                     <a class="nav-link" href="/feed">My Feed</a>
+                    <a class="nav-link" href="/following">Following</a>
                     <% } %>
             </div>
-            <div class="navbar-nav ms-auto">
+            <div class="navbar-nav mx-auto">
                 <form class="d-flex" role="search" action="/plans" method="get">
                     <input class="form-control me-2 search-input" name="q" type="search"
                         placeholder="Search fitness plans" aria-label="Search">
@@ -22,16 +23,13 @@
 
 
             <div class="navbar-nav ms-auto">
-                <% if(currentUser && currentUser.role==='trainer' ){ %>
-                    <a class="nav-link" href="/plans/new">Create Plan</a>
+                <% if(!currentUser){ %>
+                    <a class="nav-link" href="/signup"><b>Sign up</b></a>
+                    <a class="nav-link" href="/login"><b>Log in</b></a>
                     <% } %>
-                        <% if(!currentUser){ %>
-                            <a class="nav-link" href="/signup"><b>Sign up</b></a>
-                            <a class="nav-link" href="/login"><b>Log in</b></a>
+                        <% if(currentUser) {%>
+                            <a class="nav-link" href="/logout">Log out</a>
                             <% } %>
-                                <% if(currentUser) {%>
-                                    <a class="nav-link" href="/logout">Log out</a>
-                                    <% } %>
             </div>
         </div>
     </div>

@@ -16,4 +16,7 @@ router.route('/logout')
 
 router.get('/feed', isLoggedIn, userController.showFeed);
 
+router.get('/following', isLoggedIn, userController.showFollowing);
+
+
 module.exports = router;
