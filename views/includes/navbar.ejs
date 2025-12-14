@@ -7,6 +7,9 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link" href="/plans">Explore Plans</a>
+                <% if(currentUser) { %>
+                    <a class="nav-link" href="/feed">My Feed</a>
+                    <% } %>
             </div>
             <div class="navbar-nav ms-auto">
                 <form class="d-flex" role="search" action="/plans" method="get">
@@ -16,6 +19,8 @@
                             class="fa-solid fa-magnifying-glass"></i>Search</button>
                 </form>
             </div>
+
+
             <div class="navbar-nav ms-auto">
                 <% if(currentUser && currentUser.role==='trainer' ){ %>
                     <a class="nav-link" href="/plans/new">Create Plan</a>

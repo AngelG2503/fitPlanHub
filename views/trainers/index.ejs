@@ -1,0 +1,22 @@
+<% layout('/layouts/boilerplate') %>
+
+    <div class="container mt-4">
+        <h2>All Trainers</h2>
+
+        <div class="row">
+            <% for(let trainer of trainers) { %>
+                <div class="col-md-4 mb-3">
+                    <div class="card all-trainer-card">
+                        <div class="card-body">
+                            <h5>
+                                <%= trainer.name || trainer.username %>
+                            </h5>
+                            <p>Followers: <%= trainer.followers ? trainer.followers.length : 0 %>
+                            </p>
+                            <a href="/trainers/<%= trainer._id %>" class="btn btn-primary">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+        </div>
+    </div>

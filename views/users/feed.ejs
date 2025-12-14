@@ -1,0 +1,45 @@
+<% layout('/layouts/boilerplate') %>
+
+    <div class="container mt-4">
+        <h2>Your Personalized Feed</h2>
+        <p class="text-muted">Plans from trainers you follow</p>
+
+        <% if(plans.length===0) { %>
+            <div class="alert alert-success">
+                <p>You haven't followed any trainers yet!</p>
+                <a href="/trainers" class="btn btn-primary">Browse Trainers</a>
+            </div>
+            <% } else { %>
+                <div class="row">
+                    <% for(let plan of plans) { %>
+                        <div class="col-md-4 mb-3">
+                            <div class="card plan-card">
+                                <img src="<%= plan.image %>" class="card-img-top" alt="<%= plan.title %>">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <%= plan.title %>
+                                    </h5>
+                                    <p class="card-text">By: <a href="/trainers/<%= plan.trainer._id %>">
+                                            <%= plan.trainer.name %>
+                                        </a></p>
+                                    <p class="card-text"><b>₹<%= plan.price.toLocaleString('en-IN') %></b></p>
+                                    <span class="badge category-badge">
+                                        <%= plan.category %>
+                                    </span>
+                                    <span class="badge difficulty-badge">
+                                        <%= plan.difficulty %>
+                                    </span>
+                                    <br><br>
+
+                                    <% if(subscribedPlanIds.includes(plan._id.toString())) { %>
+                                        <span class="badge bg-success">Subscribed ✓</span>
+                                        <% } %>
+
+                                            <a href="/plans/<%= plan._id %>" class="btn btn-dark">View Plan</a>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                </div>
+                <% } %>
+    </div>

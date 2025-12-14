@@ -19,4 +19,9 @@ module.exports.showProfile = async (req, res) => {
     }
 
     res.render('trainers/show', { trainer, plans, isFollowing });
-}
+};
+
+module.exports.index = async (req, res) => {
+    const trainers = await User.find({ role: 'trainer' });
+    res.render('trainers/index', { trainers });
+};

@@ -1,5 +1,5 @@
 const User = require("../models/User");
-
+const Plan = require('../models/Plans');
 module.exports.renderSignup = (req, res) => {
     res.render("users/signup");
 };
@@ -44,3 +44,16 @@ module.exports.logout = (req, res) => {
     req.flash("success", "Logged Out Successfully!");
     res.redirect("/plans");
 };
+
+module.exports.showFeed = async (req, res) => {
+    const user = await User.findById(req.user._id).populate('following');
+    const followedTrainerIds = user.following.map(t => t._id);
+
+    const plans = await Plan.find({ trainer: { $in: followedTrainerIds } })
+        .populate('trainer')
+        .sort({ createdAt: -1 });
+
+    const subscribedPlanIds = user.subscriptions.map(sub => sub.plan.toString());
+
+    res.render('users/feed', { plans, user, subscribedPlanIds });
+}
