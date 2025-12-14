@@ -8,6 +8,12 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/User");
+const userRoutes = require("./routes/User");
+const planRoutes = require("./routes/plan");
+const methodOverride = require("method-override");
+
+
+
 
 const app = express();
 
@@ -15,9 +21,11 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
-app.use(express.json());
+app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
+
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -33,7 +41,7 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(new LocalStrategy({ usernameField: 'email' }, User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -45,8 +53,10 @@ app.use((req, res, next) => {
     next();
 })
 
-const userRoutes = require("./routes/User");
+app.use("/plans", planRoutes);
 app.use("/", userRoutes);
+
+
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("MongoDB Connected"))

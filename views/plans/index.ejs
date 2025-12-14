@@ -1,0 +1,97 @@
+<% layout('layouts/boilerplate') %>
+
+    <div id="filters">
+        <div class="filter">
+            <a href="/plans?category=Weight-loss">
+                <i class="fa-solid fa-weight-scale"></i>
+                <p>Weight Loss</p>
+            </a>
+        </div>
+        <div class="filter">
+            <a href="/plans?category=Muscle-gain">
+                <i class="fa-solid fa-dumbbell"></i>
+                <p>Muscle Gain</p>
+            </a>
+        </div>
+        <div class="filter">
+            <a href="/plans?category=Strength">
+                <i class="fa-solid fa-hand-fist"></i>
+                <p>Strength</p>
+            </a>
+        </div>
+        <div class="filter">
+            <a href="/plans?category=Cardio">
+                <i class="fa-solid fa-heart-pulse"></i>
+                <p>Cardio</p>
+            </a>
+        </div>
+        <div class="filter">
+            <a href="/plans?category=Flexibility">
+                <i class="fa-solid fa-person-walking"></i>
+                <p>Flexibility</p>
+            </a>
+        </div>
+        <div class="filter">
+            <a href="/plans?category=Yoga">
+                <i class="fa-solid fa-spa"></i>
+                <p>Yoga</p>
+            </a>
+        </div>
+        <div class="filter">
+            <a href="/plans?category=Beginner">
+                <i class="fa-solid fa-seedling"></i>
+                <p>Beginner</p>
+            </a>
+        </div>
+        <div class="filter">
+            <a href="/plans?category=Advanced">
+                <i class="fa-solid fa-fire"></i>
+                <p>Advanced</p>
+            </a>
+        </div>
+        <div class="filter">
+            <a href="/plans?category=Home-workout">
+                <i class="fa-solid fa-house"></i>
+                <p>Home Workout</p>
+            </a>
+        </div>
+        <div class="filter">
+            <a href="/plans?category=Gym">
+                <i class="fa-solid fa-building"></i>
+                <p>Gym Plans</p>
+            </a>
+        </div>
+        <%if(currentUser && currentUser.role==='trainer' ){%>
+            <div class="filter create-filter ms-auto">
+                <a href="/plans/new" class="create-plan-btn">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Create Plans</span>
+                </a>
+            </div>
+            <%}%>
+    </div>
+    <div class="row mt-4">
+        <% for (let plan of allPlans) { %>
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="card plan-card h-100">
+                    <a href="/plans/<%= plan._id %>" class="plans-link">
+                        <img src="<%= plan.image %>" class="card-img-top" alt="plan image"
+                            style="height:20rem; object-fit:cover;" />
+                        <div class="card-img-overlay"></div>
+                    </a>
+
+
+                    <div class="card-body">
+                        <p class="card-text">
+                            <b>
+                                <%= plan.title %>
+                            </b>
+                            <br>
+                            &#8377;
+                            <%= plan.price ? plan.price.toLocaleString("en-IN") : "Free" %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+    </div>

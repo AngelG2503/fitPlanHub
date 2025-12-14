@@ -1,0 +1,73 @@
+<% layout ('/layouts/boilerplate')%>
+    <div class="row mt-3">
+        <div class="col-8 offset-2">
+            <h3>Edit your fitness plan</h3>
+            <form method="POST" action="/plans/<%=plan._id%>?_method=PUT" novalidate class="needs-validation">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input name="plan[title]" value="<%=plan.title%>" type="text" class="form-control" required>
+                    <div class="valid-feedback">Title looks good !</div>
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="plan[description]" class="form-control" required><%=plan.description%></textarea>
+                    <div class="invalid-feedback">Please enter a Description!</div>
+                </div>
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select id="category" name="plan[category]" class="form-select">
+                        <option value="Weight-loss" <%=plan.category==="Weight-loss" ? "selected" : "" %>>Weight Loss
+                        </option>
+                        <option value="Muscle-gain" <%=plan.category==="Muscle-gain" ? "selected" : "" %>>Muscle Gain
+                        </option>
+                        <option value="Strength" <%=plan.category==="Strength" ? "selected" : "" %>>Strength</option>
+                        <option value="Cardio" <%=plan.category==="Cardio" ? "selected" : "" %>>Cardio</option>
+                        <option value="Flexibility" <%=plan.category==="Flexibility" ? "selected" : "" %>>Flexibility
+                        </option>
+                        <option value="Yoga" <%=plan.category==="Yoga" ? "selected" : "" %>>Yoga</option>
+                        <option value="Beginner" <%=plan.category==="Beginner" ? "selected" : "" %>>Beginner</option>
+                        <option value="Advanced" <%=plan.category==="Advanced" ? "selected" : "" %>>Advanced</option>
+                        <option value="Home-workout" <%=plan.category==="Home-workout" ? "selected" : "" %>>Home Workout
+                        </option>
+                        <option value="Gym" <%=plan.category==="Gym" ? "selected" : "" %>>Gym</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    Original Listing Image:<br>
+                    <img src="<%= plan.image %>" />
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Upload Image</label>
+                    <input name="plan[image]" type="text" class="form-control">
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-4">
+                        <label for="price" class="form-label">Price</label>
+                        <input name="plan[price]" value="<%=plan.price%>" type="text" class="form-control" required>
+                        <div class="invalid-feedback">Please enter a valid Price!</div>
+
+                    </div>
+                    <div class="mb-3 col-md-8">
+                        <label for="duration" class="form-label">Duration</label>
+                        <input name="plan[duration]" value="<%=plan.duration%>" type="text" class="form-control"
+                            required>
+                        <div class="invalid-feedback">Please enter a Duration!</div>
+
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="difficulty" class="form-label">Difficulty</label>
+                    <select name="plan[difficulty]" class="form-select" required>
+                        <option value="beginner" <%=plan.difficulty==="beginner" ? "selected" : "" %>>Beginner</option>
+                        <option value="intermediate" <%=plan.difficulty==="intermediate" ? "selected" : "" %>
+                            >Intermediate</option>
+                        <option value="advanced" <%=plan.difficulty==="advanced" ? "selected" : "" %>>Advanced</option>
+                    </select>
+
+                </div>
+                <button class="btn btn-dark edit-btn mt-3">Edit</button>
+            </form>
+        </div>
+    </div>

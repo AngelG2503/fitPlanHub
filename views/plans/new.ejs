@@ -1,0 +1,68 @@
+<% layout ('/layouts/boilerplate')%>
+    <div class="row">
+        <div class="col-lg-6 col-md-8 offset-lg-3 offset-md-2 mt-3">
+
+            <h3>Create a New Fitness Plan</h3>
+            <form method='post' action="/plans" novalidate class="needs-validation">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input name="plan[title]" placeholder="Add a catchy title" type="text" class="form-control"
+                        required>
+                    <div class="valid-feedback">Title looks good !</div>
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="plan[description]" class="form-control" required></textarea>
+                    <div class="invalid-feedback">Please enter a Description!</div>
+
+                </div>
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select name="plan[category]" class="form-select" required>
+                        <option value="Weight-loss">Weight Loss</option>
+                        <option value="Muscle-gain">Muscle Gain</option>
+                        <option value="Strength">Strength</option>
+                        <option value="Cardio">Cardio</option>
+                        <option value="Flexibility">Flexibility</option>
+                        <option value="Yoga">Yoga</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                        <option value="Home-workout">Home Workout</option>
+                        <option value="Gym">Gym</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a Category!</div>
+                </div>
+                <div class="mb-3">
+                    <label for="difficulty" class="form-label">Difficulty</label>
+                    <select name="plan[difficulty]" class="form-select" required>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a Difficulty level!</div>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Upload Image</label>
+                    <input name="plan[image]" type="text" class="form-control" required>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label for="duration" class="form-label">Duration</label>
+                        <input name="plan[duration]" placeholder="8" type="number" class="form-control" required>
+                        <div class="invalid-feedback">Please enter a valid Duration!</div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label for="price" class="form-label">Price</label>
+                        <input name="plan[price]" placeholder="1200" class="form-control" required>
+                        <div class="invalid-feedback">Please enter a valid Price!</div>
+
+                    </div>
+                </div>
+                <button class="btn btn-dark add-btn mt-3">Add Plan</button>
+
+            </form>
+        </div>
+    </div>
