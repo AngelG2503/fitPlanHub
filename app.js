@@ -57,6 +57,9 @@ app.use((req, res, next) => {
 
     next();
 })
+app.get("/", (req, res) => {
+    res.redirect("/plans");
+});
 
 app.use("/plans", planRoutes);
 app.use("/", userRoutes);
